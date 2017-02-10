@@ -97,7 +97,17 @@
       //need separate searches beginning at each letter.
       for ($r=0; $r<5; $r++){
         for ($c=0; $c<5; $c++){
-          $this->dfSearch($r, $c, $result, $word, $seen, 5, 0);
+          if ($this->dfSearch($r, $c, $result, $word, $seen, 5, 0)){
+            for ($i=0; $i<count($seen);$i++){
+              for ($j=0; $j<count($seen[$i]); $j++){
+                if ($seen[$i][$j]==true){
+                  $index = 5*$i+$j;
+                  $this->cubes[$index]->color="red-border";
+                }
+              }
+            }
+            return;
+          }
         }
       }
     }
@@ -107,11 +117,10 @@
       $seen[$r][$c] = true;
       //The following calculation assumes a 5x5 grid.
       $index = 5*$r+$c;
-      //Need to write formula to convert between linear array and 2d array indices
-      $this->cubes[$index]->color="red-border";
+      //Add next letter to result string
       $result .= $this->cubes[$index]->getUpLetter();
 
-      if (strlen($target)<strlen($result) or $depthLimit<$currentDepth){
+      if (strlen($target)<strlen($result) or $depthLimit<=$currentDepth){
         return false; //The string built up longer than target word, so backtrack.
       }
       //check whether word matches any in the dictionary
@@ -122,40 +131,19 @@
       //if (in_array($word, $dict)) { echo "Found!"}
 
       //Need to check up to 8 positions around each letter
-      //This is very ugly, but I didn't see a clear way to combine them
-      if ($c!=0 and !$seen[$r][$c-1]) { //Check left
-        $this->dfSearch($r, $c-1, $result, $target, $seen,$depthLimit,$currentDepth+1);
-          if ($r!=0 and !$seen[$r-1][$c-1]){ //check up-left
-            $this->dfSearch($r-1, $c-1, $result, $target, $seen,$depthLimit,$currentDepth+1);
+      for ($i=$r-1; $i<=$r+1; $i++){
+        for ($j=$c-1; $j<$c+1; $j++){
+          if ($i>=0 and $j>=0 and $i<=4 and $j<=4 and !$seen[$i][$j]){
+            $this->dfSearch($i, $j, $result, $target, $seen,$depthLimit,$currentDepth+1);
           }
-      }
-      if ($c!=4 and !$seen[$r][$c+1]) { //Check right
-        $this->dfSearch($r, $c+1, $result, $target, $seen,$depthLimit,$currentDepth+1);
-        if ($r!=0 and !$seen[$r-1][$c+1]){ //check up-right
-          $this->dfSearch($r-1, $c+1, $result, $target, $seen,$depthLimit,$currentDepth+1);
         }
       }
-
-      if ($r!=0 and !$seen[$r-1][$c]) { //Check up
-        $this->dfSearch($r-1, $c, $result, $target, $seen,$depthLimit,$currentDepth+1);
-      }
-
-      if ($r!=4 and !$seen[$r+1][$c]) { //Check down
-        $this->dfSearch($r+1, $c, $result, $target, $seen,$depthLimit,$currentDepth+1);
-        if ($c!=4 and !$seen[$r+1][$c+1]) { //check down-right
-          $this->dfSearch($r+1, $c+1, $result, $target, $seen,$depthLimit,$currentDepth+1);
-        }
-        if ($c!=0 and !$seen[$r+1][$c-1]) { //check down-left
-          $this->dfSearch($r+1, $c-1, $result, $target, $seen,$depthLimit,$currentDepth+1);
-        }
-      }
-      //End recursive nightmare.
 
       //No match, get rid of last letter
       $result=substr($result,0,strlen($target)-1);
       //mark current as false as it isn't part of solution path.
       $seen[$r][$c] = false;
-      $this->cubes[$index]->color="gains-border";
+      //$this->cubes[$index]->color="gains-border";
       return false;
     }
 
