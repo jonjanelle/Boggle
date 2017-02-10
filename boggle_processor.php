@@ -12,7 +12,7 @@
         $board->scramble();
       }
     }
-    if (isset($_GET["word_search"])){
+    if (isset($_GET["word_search"]) and strlen(trim($_GET["word_search"]))>0){
       $_SESSION["resultString"] = "Target word NOT found.";
       $board->wordSearch(trim($_GET["word_search"]));
     }
@@ -97,7 +97,7 @@
       //need separate searches beginning at each letter.
       for ($r=0; $r<5; $r++){
         for ($c=0; $c<5; $c++){
-          if ($this->dfSearch($r, $c, $result, $word, $seen, 5, 0)){
+          if ($this->dfSearch($r, $c, $result, $word, $seen, 6, 0)){
             for ($i=0; $i<count($seen);$i++){
               for ($j=0; $j<count($seen[$i]); $j++){
                 if ($seen[$i][$j]==true){
@@ -120,21 +120,23 @@
       //Add next letter to result string
       $result .= $this->cubes[$index]->getUpLetter();
 
-      if (strlen($target)<strlen($result) or $depthLimit<=$currentDepth){
-        return false; //The string built up longer than target word, so backtrack.
-      }
-      //check whether word matches any in the dictionary
-      else if ($result==$target){
+      if ($result==$target){
         $_SESSION["resultString"] = "Target word found!";
         return true; //Done!
       }
+
+      else if (strlen($target)<strlen($result) or $depthLimit<=$currentDepth){
+        return false; //The string built up longer than target word, so backtrack.
+      }
+      //check whether word matches any in the dictionary
+
       //if (in_array($word, $dict)) { echo "Found!"}
 
       //Need to check up to 8 positions around each letter
       for ($i=$r-1; $i<=$r+1; $i++){
-        for ($j=$c-1; $j<$c+1; $j++){
+        for ($j=$c-1; $j<=$c+1; $j++){
           if ($i>=0 and $j>=0 and $i<=4 and $j<=4 and !$seen[$i][$j]){
-            $this->dfSearch($i, $j, $result, $target, $seen,$depthLimit,$currentDepth+1);
+            $this->dfSearch($i, $j, $result, $target, $seen, $depthLimit, $currentDepth+1);
           }
         }
       }
