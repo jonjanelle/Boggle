@@ -16,15 +16,22 @@
   //If here after a form submission
   if ($_GET) {
     $board = $_SESSION["board"];
+    //Reset board cube color
+    $board->setColorAll("gains-border");
+    //Unset all result session variables
+    if (isset($_SESSION["resultString"])){ unset($_SESSION["resultString"]); }
+    if (isset($_SESSION["boolarray"])) { unset($_SESSION['boolarray']);}
+
     if (isset($_GET["options"])){
       if ($_GET["options"]=="shuffle") {
         $board->scramble();
       }
+      elseif ($_GET["options"]=="three-letter"){
+        
+      }
     }
 
     if (isset($_GET["word_search"]) and strlen(trim($_GET["word_search"]))>0){
-      $board->setColorAll("gains-border");
-      if (isset($_SESSION["boolarray"])) { unset($_SESSION['boolarray']);}
       $board->wordSearch(trim($_GET["word_search"]));
       if (isset($_SESSION["boolarray"]) and isset($_GET["highlight"]) ) {
         $board->booleanColorSet($_SESSION["boolarray"], "red-border");

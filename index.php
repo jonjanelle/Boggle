@@ -28,7 +28,7 @@
 
               <input type="word" class="form-control" name="word_search">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="highlight">
+                <input type="checkbox" class="form-check-input" name="highlight" checked="checked">
                 Highlight word on board if found?
               </label>
             </div>
@@ -52,7 +52,7 @@
               </label>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">Go!</button>
+              <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </div>
           </form>
         </div>
@@ -71,7 +71,7 @@
 
       </div>
       <br />
-      <p>Results:</p>
+      <div id="result-tag">Results:</div>
       <div class="well" id="result_well">
         <?php
           if (isset($_SESSION["resultString"])) {
