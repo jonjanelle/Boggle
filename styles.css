@@ -22,7 +22,8 @@
   display: inline-block;
   vertical-align: top;
   width: 330px;
-  padding:1em;
+  height: 380px;
+  padding:1.5em 1em 1em 1em;
   margin: 1em 1em 0em 0em;
   background: #f4f7f8;
   border: 3px solid #ccdddd;
