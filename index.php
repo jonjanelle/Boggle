@@ -63,8 +63,7 @@
             if (isset($_SESSION["board"])) {
               $board = $_SESSION["board"];
               for ($i=0; $i < count($board->cubes);$i++){
-                echo "<div class=\"boggle-square gains-border ";
-                echo $board->cubes[$i]->color."\">".$board->cubes[$i]->getUpLetter()."</div>";
+                echo "<div class=\"boggle-square ".$board->cubes[$i]->color."\">".$board->cubes[$i]->getUpLetter()."</div>";
               }
             }
            ?>
@@ -77,7 +76,7 @@
         <?php
           if (isset($_SESSION["resultString"])) {
             echo $_SESSION["resultString"];
-            echo var_dump($_SESSION["boolarray"]);
+            //echo var_dump($_SESSION["boolarray"]);
           }
         ?>
 

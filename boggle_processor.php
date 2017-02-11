@@ -6,12 +6,14 @@
       and list all words of specified lengths by searching the cubes and
       checking potential words against a dictionary file.
 
-      Author: Jon Janelle 
+      Used https://boardgamegeek.com/thread/300883/letter-distribution
+      for info about letter distribution
+
+      Author: Jon Janelle
   */
   session_start(); //board stored as a session variable.
-  //Used https://boardgamegeek.com/thread/300883/letter-distribution
-  //for info about letter distribution
 
+  //If here after a form submission
   if ($_GET) {
     $board = $_SESSION["board"];
     if (isset($_GET["options"])){
@@ -19,12 +21,19 @@
         $board->scramble();
       }
     }
+
     if (isset($_GET["word_search"]) and strlen(trim($_GET["word_search"]))>0){
-      $_SESSION["resultString"] = "Target word NOT found.";
+      $board->setColorAll("gains-border");
+      if (isset($_SESSION["boolarray"])) { unset($_SESSION['boolarray']);}
       $board->wordSearch(trim($_GET["word_search"]));
+      if (isset($_SESSION["boolarray"]) and isset($_GET["highlight"]) ) {
+        $board->booleanColorSet($_SESSION["boolarray"], "red-border");
+      }
     }
   }
 
+  //If not here after a form submission,then create a new board
+  //and set the board session variable
   else {
     $board=new BoggleBoard();
     if (count($board->cubes)==0){
@@ -104,26 +113,32 @@
       }
     }
 
+    function setColorAll($colorClassName){
+        for ($i=0; $i<count($this->cubes); $i++) {
+          $this->cubes[$i]->color=$colorClassName;
+        }
+    }
+
+    function booleanColorSet($arr, $className){
+      for ($i=0;$i<count($arr);$i++){
+        for ($j=0; $j<count($arr[$i]); $j++){
+          if ($arr[$i][$j]) {
+            $index = 5*$i+$j;
+            $this->cubes[$index]->color=$className;
+          }
+        }
+      }
+    }
     //Search the current board for a given word.
     //Wrapper for the dfSearch method
     function wordSearch($word) {
       $result = "";
+      $_SESSION["resultString"] = "Target word NOT found.";
       $seen = array_fill(0, 5, array_fill(0,5,false)); //5 by 5 bool array, all false
       //need separate searches beginning at each letter.
       for ($r=0; $r<5; $r++){
         for ($c=0; $c<5; $c++){
-          if ($this->dfSearch($r, $c, $result, $word, $seen, 6, 0)){
-            for ($i=0; $i<count($seen);$i++){
-              for ($j=0; $j<count($seen[$i]); $j++){
-                if ($seen[$i][$j]==true){
-                  $index = 5*$i+$j;
-                  $this->cubes[$index]->color="red-border";
-                }
-              }
-            }
-            $_SESSION["boolarray"]=$seen;
-            return;
-          }
+          $this->dfSearch($r, $c, $result, $word, $seen, 7, 0);
         }
       }
     }
@@ -147,16 +162,17 @@
       //Add next letter to result string
       $result .= $this->cubes[$index]->getUpLetter();
 
-      if ($result==$target){
-        $_SESSION["resultString"] = "Target word found!";
+      if ($result===$target){
+        $_SESSION["resultString"] = "Target word found: ".$result."<br>";
+        $_SESSION["boolarray"]=$seen;
         return true; //Done!
       }
 
-      else if (strlen($target)<strlen($result) or $depthLimit<=$currentDepth){
-        return false; //The string built up longer than target word, so backtrack.
+      //Check whether result string too long or recursion depth exceeded
+      else if (strlen($result)>strlen($target) or $currentDepth>=$depthLimit){
+        return false;
       }
       //check whether word matches any in the dictionary
-
       //if (in_array($word, $dict)) { echo "Found!"}
 
       //Need to check up to 8 positions around each letter
@@ -168,12 +184,11 @@
         }
       }
 
-      //No match, get rid of last letter
+      //No match, remove last letter from $result
       $result=substr($result,0,strlen($target)-1);
-      //mark current as false as it isn't part of solution path.
+      //mark current as false as it is not part of solution path.
       $seen[$r][$c] = false;
-      //$this->cubes[$index]->color="gains-border";
       return false;
-    }
 
-  }
+    }
+}

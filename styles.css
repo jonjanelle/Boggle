@@ -54,6 +54,10 @@
   border: 6px solid red;
 }
 
+.green-border{
+  border: 6px solid green;
+}
+
 .header {
   margin: 0;
   text-align: center;
