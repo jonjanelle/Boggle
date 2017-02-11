@@ -77,6 +77,7 @@
         <?php
           if (isset($_SESSION["resultString"])) {
             echo $_SESSION["resultString"];
+            echo var_dump($_SESSION["boolarray"]);
           }
         ?>
 

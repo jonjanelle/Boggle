@@ -1,9 +1,16 @@
 <?php
+  /*
+      Process the submission of the "Boggle Processor" form.
+      Classes are used represent cubes and the board. the BoggleBoard class
+      contains methods to shuffle the board (new game), search for a given word,
+      and list all words of specified lengths by searching the cubes and
+      checking potential words against a dictionary file.
+
+      Author: Jon Janelle 
+  */
   session_start(); //board stored as a session variable.
   //Used https://boardgamegeek.com/thread/300883/letter-distribution
   //for info about letter distribution
-
-
 
   if ($_GET) {
     $board = $_SESSION["board"];
@@ -35,25 +42,29 @@
    * Represents a single 6-sided Boggle cube
    * $sides: an array of characters corresponding to letters on cube faces
    * $upSide: The index of $sides corresponding to the letter currently visible
+   * $color: The string name of a css class containing color info for the cube
    */
   class BogglePiece {
-    public $sides; //Array of all sides
+    public $sides;  //Array of all sides
     public $upSide; //index of the current side facing up
-    public $color; //border color of piece.
+    public $color;  //border color of piece.
 
-    //New pieces are constructed using $sides array
+    //Construct a new cube
+    //$sideArray: An array of strings representing faces of a Goggle cube
     function __construct($sideArray){
       $this->sides = $sideArray;
       $this->upSide = rand(0,count($this->sides)-1);
       $this->color = "gains-border";
     }
 
-    //Get the current visible letter
+    //Get the currently visible letter string
     function getUpLetter(){
       return $this->sides[$this->upSide];
     }
 
     //Set the current visible letter
+    //$newUpSide: An integer [0,$this->sides-1] corresponding to
+    //            a side of the cube face
     function setUpSide($newUpSide){
       if ($newUpSide>=0 and $newUpSide<count($this->sides)){
         $this->upSide=$newUpSide;
@@ -77,20 +88,24 @@
         $temp=0;
         $pos=0;
         $numSides=count($this->cubes[$endPos]->sides); //sides per cube.
+
         while ($endPos > 1) {
           //Choose a new upward face for cube at $endPos
           $this->cubes[$endPos]->setUpSide(rand(0, $numSides));
-          $pos = rand(0, $endPos-1); //pick value to swap
+          //pick random cube to swap with cube at $endPos
+          $pos = rand(0, $endPos-1);
+          //Perform swap
           $temp = $this->cubes[$pos];
           $this->cubes[$pos] = $this->cubes[$endPos];
           $this->cubes[$endPos] = $temp;
+          //Cube at endPos done being shuffled. Move left one cube.
           $endPos-=1;
         }
       }
     }
 
     //Search the current board for a given word.
-    //This is a wrapper method that calls the dfSearch method
+    //Wrapper for the dfSearch method
     function wordSearch($word) {
       $result = "";
       $seen = array_fill(0, 5, array_fill(0,5,false)); //5 by 5 bool array, all false
@@ -106,12 +121,24 @@
                 }
               }
             }
+            $_SESSION["boolarray"]=$seen;
             return;
           }
         }
       }
     }
 
+    /*
+     *  Search $this->cubes array (view as 5x5 array of arrays) beginning at
+     *  given row and column indices for a given value. Search method is depth-first.
+     *  Time-complexity is an issue here, so recursion depth can be limited.
+     *  $r :starting row index
+     *  $c: starting column index
+     *  $result : Temporary storage in which potential matches are built.
+     *  $seen : A 5x5 boolean array of arrays indicating whether a particular
+     *          cube has already been visited in the construction of $result
+     *  $depthLimit:
+     */
     function dfSearch($r, $c, $result, $target, $seen, $depthLimit, $currentDepth) {
       // Mark current cell as seen
       $seen[$r][$c] = true;
