@@ -10,8 +10,8 @@
   vertical-align: top;
   margin: 1em 0em 0em 1em;
   padding:5px;
-  width: 380px;
-  height: 380px;
+  width: 400px;
+  height: 400px;
   background: #6495ed;q
   border-radius: 5px;
   border: 10px solid #ffb90f;
@@ -43,8 +43,8 @@
 
 .boggle-square {
   float: left;
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   margin: 5px;
   text-align: center;
   font-weight: bold;
