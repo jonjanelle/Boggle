@@ -27,7 +27,7 @@
         $board->scramble();
       }
       elseif ($_GET["options"]=="three-letter"){
-        
+
       }
     }
 
@@ -142,6 +142,7 @@
       $result = "";
       $_SESSION["resultString"] = "Target word NOT found.";
       $seen = array_fill(0, 5, array_fill(0,5,false)); //5 by 5 bool array, all false
+      $word = strtolower($word);
       //need separate searches beginning at each letter.
       for ($r=0; $r<5; $r++){
         for ($c=0; $c<5; $c++){
