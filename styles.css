@@ -2,7 +2,6 @@
 #container{
   margin: 0 auto;
   padding: 1em;
-
 }
 
 #boggle-board {
@@ -10,12 +9,12 @@
   vertical-align: top;
   margin: 1em 0em 0em 1em;
   padding:5px;
-  width: 400px;
-  height: 400px;
-  background: #6495ed;q
+  background: #6495ed;
   border-radius: 5px;
   border: 10px solid #ffb90f;
   border-style:inset;
+  width: 400px;
+  height: 400px;
 }
 
 #mainform {
@@ -79,7 +78,6 @@
   max-width: 90%;
   font-weight: bold;
 }
-
 
 hr {
   margin: .5em 0 1em 0;

@@ -9,6 +9,8 @@
       Used https://boardgamegeek.com/thread/300883/letter-distribution
       for info about letter distribution
 
+      Word list obtained from: http://www.gwicks.net/dictionaries.htm
+
       Author: Jon Janelle
   */
   session_start(); //board stored as a session variable.
@@ -27,7 +29,7 @@
         $board->scramble();
       }
       elseif ($_GET["options"]=="three-letter"){
-
+        
       }
     }
 
@@ -52,7 +54,6 @@
     }
     $_SESSION["board"] = $board;
   }
-
 
   /*
    * Represents a single 6-sided Boggle cube
@@ -191,12 +192,10 @@
           }
         }
       }
-
       //No match, remove last letter from $result
       $result=substr($result,0,strlen($target)-1);
       //mark current as false as it is not part of solution path.
       $seen[$r][$c] = false;
       return false;
-
     }
 }
