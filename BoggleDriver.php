@@ -23,8 +23,9 @@
   //Unset all result session variables from previous page loads
   if (isset($_SESSION["resultString"])){ unset($_SESSION["resultString"]); }
   if (isset($_SESSION["boolArray"])) { unset($_SESSION['boolArray']);}
-
+  $alert_color = "alert-info";
   if ($_GET) { //If here after a form submission
+    $alert_color = "alert-info";
     //$board is a BoggleBoard object
     $board = $_SESSION["board"];
     //Reset board piece colors
@@ -32,6 +33,7 @@
 
     //Process any radio button selections first
     if (isset($_GET["options"])){
+      $alert_color = "alert-success";
       if ($_GET["options"]=="shuffle") {
         $board->scramble();
       }
@@ -83,6 +85,7 @@
 
     //Process and search for text entry
     if (isset($_GET["word_search"]) and strlen(trim($_GET["word_search"]))>0){
+
       //Load dictionary file as WordList object
       if (!isset($_SESSION["wordList"])){
         $_SESSION["wordList"] = new WordList("english.txt");
@@ -94,17 +97,21 @@
         if (isset($_GET["highlight"]) ) {
           if ($wordList->inList($target)){
             $board->booleanColorSet($_SESSION["boolArray"], "green-border");
+            $alert_color = "alert-success";
           }
           else {
             $board->booleanColorSet($_SESSION["boolArray"], "red-border");
             $_SESSION["resultString"].="Word was NOT found in the dictionary.<br />";
+            $alert_color = "alert-danger";
           }
         }
       }
       else {
         $_SESSION["resultString"] = "Word was not found.";
+        $alert_color = "alert-danger";
       }
     }
+
   }
 
   //If not here after a form submission,then create a new board

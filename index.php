@@ -78,7 +78,7 @@
       </div>
 
       <div id="result-tag">Results:</div>
-      <div class="alert alert-info shadowbox" id="result_well">
+      <div class="alert <?=$alert_color?> shadowbox" id="result_well">
         <?php
           if (isset($_SESSION["resultString"])) {
             echo $_SESSION["resultString"];
