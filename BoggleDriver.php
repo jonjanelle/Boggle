@@ -93,7 +93,7 @@
       $target = trim($_GET["word_search"]);
       $wordList = $_SESSION["wordList"];
       if ($board->wordSearch($target)) {
-        $_SESSION["resultString"] = "Target word found on board.<br>";
+        $_SESSION["resultString"] =$target." was found on the board.<br>";
         if (isset($_GET["highlight"]) ) {
           if ($wordList->inList($target)){
             $board->booleanColorSet($_SESSION["boolArray"], "green-border");
@@ -101,13 +101,13 @@
           }
           else {
             $board->booleanColorSet($_SESSION["boolArray"], "red-border");
-            $_SESSION["resultString"].="Word was NOT found in the dictionary.<br />";
+            $_SESSION["resultString"].=$target." was NOT found in the dictionary.<br />";
             $alert_color = "alert-danger";
           }
         }
       }
       else {
-        $_SESSION["resultString"] = "Word was not found.";
+        $_SESSION["resultString"] = $target." was not found.";
         $alert_color = "alert-danger";
       }
     }
