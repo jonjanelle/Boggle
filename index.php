@@ -1,4 +1,4 @@
-<?php require('boggle_processor.php');?>
+<?php require('BoggleDriver.php');?>
 <!doctype html>
 <html>
   <head>
@@ -22,7 +22,7 @@
       <div class="center-wrapper">
 
         <div id="mainform">
-          <form method="get">
+          <form method="GET" action="index.php">
             <div class="form-group">
               <legend><span class="glyphicon glyphicon-search"></span> Search for word:</legend>
 
@@ -40,15 +40,15 @@
               </label>
               <label class="form-check-label rad">
                 <input type="radio" class="form-check" name="options" value="three-letter">
-                Show all 3-letter words
+                Show some 3-letter words
               </label>
               <label class="form-check-label rad">
                 <input type="radio" class="form-check" name="options" value="four-letter">
-                Show all 4-letter words
+                Show some 4-letter words
               </label>
               <label class="form-check-label rad">
                 <input type="radio" class="form-check" name="options" value="five-letter">
-                Show all 5-letter words
+                Show some 5-letter words
               </label>
             </div>
             <div class="form-group">
@@ -60,6 +60,9 @@
         <div id="boggle-board">
           <?php
             //output the board
+          //  foreach ($x as $key => $value) {
+              # code...
+          //  }
             if (isset($_SESSION["board"])) {
               $board = $_SESSION["board"];
               for ($i=0; $i < count($board->cubes);$i++){
