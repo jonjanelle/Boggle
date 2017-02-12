@@ -17,49 +17,82 @@
 
       Author: Jon Janelle
   */
-  session_start();
 
-  //Load dictionary file as WordList object
-  if (!isset($_SESSION["wordList"])){
-    $_SESSION["wordList"] = new WordList("english.txt");
-  }
+  session_start();
 
   //Unset all result session variables from previous page loads
   if (isset($_SESSION["resultString"])){ unset($_SESSION["resultString"]); }
   if (isset($_SESSION["boolArray"])) { unset($_SESSION['boolArray']);}
-
 
   if ($_GET) { //If here after a form submission
     //$board is a BoggleBoard object
     $board = $_SESSION["board"];
     //Reset board piece colors
     $board->setColorAll("gains-border");
-    //get array of words
-    $wordList = $_SESSION["wordList"];
 
+    //Process any radio button selections first
     if (isset($_GET["options"])){
       if ($_GET["options"]=="shuffle") {
         $board->scramble();
       }
       elseif ($_GET["options"]=="three-letter"){
-        $found = "";
-        foreach ($wordList->wordArray as $word){
-          if (strlen($word)==4){
-              if ($board->wordSearch($word)) {
-                $found.=$word.", ";
-                if (strlen($found)>50){break;}
-              }
+        //The word list was broken into smaller files to improve search
+        //efficiency.
+        if (!isset($_SESSION["words3"])){
+          $_SESSION["words3"] = new WordList("english3.txt");
+        }
+        $words = $board->findInDict($_SESSION["words3"],3);
+        foreach ($words as $w) {
+          if (isset($_SESSION["resultString"])){
+            $_SESSION["resultString"].=$w." ";
+          }
+          else {
+            $_SESSION["resultString"]="Three letter words:<br />".$w." ";
           }
         }
-        $_SESSION["resultString"].="<br />".$found;
+      }
+      elseif ($_GET["options"]=="four-letter"){
+        if (!isset($_SESSION["words4"])){
+          $_SESSION["words4"] = new WordList("english4.txt");
+        }
+        $words = $board->findInDict($_SESSION["words4"],4);
+        foreach ($words as $w) {
+          if (isset($_SESSION["resultString"])){
+            $_SESSION["resultString"].=$w." ";
+          }
+          else {
+            $_SESSION["resultString"]="Four letter words:<br />".$w." ";
+          }
+        }
+      }
+      elseif ($_GET["options"]=="five-letter"){
+        if (!isset($_SESSION["words5"])){
+          $_SESSION["words5"] = new WordList("english5.txt");
+        }
+        $words = $board->findInDict($_SESSION["words5"],5);
+        foreach ($words as $w) {
+          if (isset($_SESSION["resultString"])){
+            $_SESSION["resultString"].=$w." ";
+          }
+          else {
+            $_SESSION["resultString"]="Five letter words:<br />".$w." ";
+          }
+        }
       }
     }
 
+    //Process and search for text entry
     if (isset($_GET["word_search"]) and strlen(trim($_GET["word_search"]))>0){
-      if ($board->wordSearch(trim($_GET["word_search"]))) {
+      //Load dictionary file as WordList object
+      if (!isset($_SESSION["wordList"])){
+        $_SESSION["wordList"] = new WordList("english.txt");
+      }
+      $target = trim($_GET["word_search"]);
+      $wordList = $_SESSION["wordList"];
+      if ($board->wordSearch($target)) {
         $_SESSION["resultString"] = "Target word found on board.<br>";
         if (isset($_GET["highlight"]) ) {
-          if ($wordList->inList($_GET["word_search"])){
+          if ($wordList->inList($target)){
             $board->booleanColorSet($_SESSION["boolArray"], "green-border");
           }
           else {
@@ -72,7 +105,6 @@
         $_SESSION["resultString"] = "Word was not found.";
       }
     }
-
   }
 
   //If not here after a form submission,then create a new board

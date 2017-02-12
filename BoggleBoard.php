@@ -52,13 +52,12 @@
       Returns true if $word is found, false otherwise.
     */
     function wordSearch($word) {
-      $result = "";
       $seen = array_fill(0, 5, array_fill(0,5,false)); //5 by 5 bool array, all false
       $word = strtolower($word);
       //need separate searches beginning at each letter.
       for ($r=0; $r<5; $r++){
         for ($c=0; $c<5; $c++){
-          if ($this->dfSearch($r, $c, $result, $word, $seen, 7, 0)) {
+          if ($this->dfSearch($r, $c, "", $word, $seen, 7, 0)) {
             $_SESSION["boolArray"]=$seen;
             return true;
           }
@@ -76,18 +75,33 @@
      *  $result : Temporary storage in which potential matches are built.
      *  $seen : A 5x5 boolean array of arrays indicating whether a particular
      *          cube has already been visited in the construction of $result
-     *  $depthLimit:
+     *  $depthLimit: The max possible length of the result string
      */
-    function dfSearch($r, $c, $result, $target, &$seen, $depthLimit, $currentDepth) {
+    function dfSearch($r, $c, $result, $target, &$seen, $depthLimit, $currentDepth, $wordList=NULL, &$wordsFound=NULL) {
 
-      if ($result===$target){
-        return true; //Done!
-      }
-      //Check whether result string too long or recursion depth exceeded
-      else if (strlen($result)>strlen($target) or $currentDepth>$depthLimit){
-        return false;
+      if ($wordList == NULL) {
+        if ($result===$target){
+          return true; //Done!
+        }
+
+        //Check whether result string too long or recursion depth exceeded
+        else if (strlen($result)>strlen($target) or $currentDepth>=$depthLimit){
+          return false;
+        }
       }
 
+      //Used for trying to find all words in given WordList of a given length
+      else {
+        if ($currentDepth==$depthLimit) {
+          if ($wordList->inList($result) and !in_array($result,$wordsFound)){
+            array_push($wordsFound, $result);
+            //Next line included to prevent timeouts. Prevents the method
+            //From finding all words of length 5+
+            if ($currentDepth>=5) { return true;}
+          }
+          return false;
+        }
+      }
       // Mark current cell as seen
       $seen[$r][$c] = true;
       //The following calculation assumes a 5x5 grid.
@@ -101,7 +115,7 @@
       for ($i=$r-1; $i<=$r+1; $i++){
         for ($j=$c-1; $j<=$c+1; $j++){
           if ($i>=0 and $j>=0 and $i<=4 and $j<=4 and !$seen[$i][$j]){
-            if ($this->dfSearch($i, $j, $result, $target, $seen, $depthLimit, $currentDepth+1)) {
+            if ($this->dfSearch($i, $j, $result, $target, $seen, $depthLimit, $currentDepth+1,$wordList,$wordsFound)) {
               return true;
             }
           }
@@ -112,13 +126,21 @@
       //mark current as false as it is not part of solution path.
       $seen[$r][$c] = false;
       return false;
-
     }
 
     //Find all words on this board with length $wordLen that are in the
-    //string array $dict
-    function findInDict($dict, $wordLen)
+    //WordList $wordList. This method is needed because it is more efficient to
+    //check all possible board constructions against a dictionary than to check
+    //whether each word in the dictionary is on the board.
+    function findInDict($wordList, $wordLen)
     {
-
+      $wordsFound=array();
+      $seen = array_fill(0, 5, array_fill(0,5,false)); //5 by 5 bool array, all false
+      for ($r=0; $r<5; $r++){
+        for ($c=0; $c<5; $c++){
+          $this->dfSearch($r, $c,"","", $seen, $wordLen, 0,$wordList,$wordsFound);
+        }
+      }
+      return $wordsFound;
     }
 }

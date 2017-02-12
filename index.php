@@ -26,11 +26,17 @@
             <div class="form-group">
               <legend><span class="glyphicon glyphicon-search"></span> Search for word:</legend>
 
-              <input type="word" class="form-control" name="word_search">
+              <input type="text" class="form-control" name="word_search" autofocus>
               <label class="form-check-label">
                 <input type="checkbox" class="form-check-input" name="highlight" checked="checked">
                 Highlight word on board if found?
               </label>
+              <!--
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="trackwords">
+                  Keep track of words found?
+                </label>
+              -->
             </div>
             <div class="form-group">
               <legend><span class="glyphicon glyphicon-plus"></span> Other Options:</legend>
@@ -40,11 +46,11 @@
               </label>
               <label class="form-check-label rad">
                 <input type="radio" class="form-check" name="options" value="three-letter">
-                Show some 3-letter words
+                Show all 3-letter words
               </label>
               <label class="form-check-label rad">
                 <input type="radio" class="form-check" name="options" value="four-letter">
-                Show some 4-letter words
+                Show all 4-letter words
               </label>
               <label class="form-check-label rad">
                 <input type="radio" class="form-check" name="options" value="five-letter">
@@ -75,11 +81,10 @@
       </div>
       <br />
       <div id="result-tag">Results:</div>
-      <div class="well" id="result_well">
+      <div class="alert alert-info" id="result_well">
         <?php
           if (isset($_SESSION["resultString"])) {
             echo $_SESSION["resultString"];
-            //echo var_dump($_SESSION["boolarray"]);
           }
         ?>
 
