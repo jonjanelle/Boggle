@@ -17,6 +17,7 @@
   height: 400px;
 }
 
+
 #mainform {
   display: inline-block;
   vertical-align: top;
@@ -25,7 +26,7 @@
   padding:1.5em 1em 1em 1em;
   margin: 1em 1em 0em 0em;
   background: #f4f7f8;
-  border: 3px solid #ccdddd;
+  border: 3px solid #d4d7df;
   border-radius: 5px;
 }
 #result-tag {
@@ -52,7 +53,9 @@
   font-size: 2.5em;
   border-radius: 5px;
   background-color: #fffcf0;
-
+  outline-style:ridge;
+  outline-width: medium;
+  outline-color: #6495ed;
 }
 .gains-border{
   border: 6px solid gainsboro;
@@ -80,6 +83,13 @@
   max-width: 90%;
   font-weight: bold;
   color: black;
+  outline-color: #74A5FD;
+}
+
+.shadowbox{
+  -webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
+  box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
 }
 
 hr {

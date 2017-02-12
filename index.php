@@ -67,18 +67,18 @@
           <?php
             //output the board
             if (isset($_SESSION["board"])) {
-              $board = $_SESSION["board"];
-              for ($i=0; $i < count($board->cubes);$i++){
-                echo "<div class=\"boggle-square ".$board->cubes[$i]->color."\">".$board->cubes[$i]->getUpLetter()."</div>";
+
+              foreach($_SESSION["board"]->cubes as $cube) {
+                echo "<div class=\"boggle-square ".$cube->color."\">".$cube->getUpLetter()."</div>";
               }
             }
            ?>
         </div>
 
       </div>
-    
+
       <div id="result-tag">Results:</div>
-      <div class="alert alert-info" id="result_well">
+      <div class="alert alert-info shadowbox" id="result_well">
         <?php
           if (isset($_SESSION["resultString"])) {
             echo $_SESSION["resultString"];
