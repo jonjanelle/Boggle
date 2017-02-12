@@ -31,12 +31,12 @@
                 <input type="checkbox" class="form-check-input" name="highlight" checked="checked">
                 Highlight word on board if found?
               </label>
-              <!--
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" name="trackwords">
-                  Keep track of words found?
-                </label>
-              -->
+
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="trackwords">
+                Keep track of words found?
+              </label>
+
             </div>
             <div class="form-group">
               <legend><span class="glyphicon glyphicon-plus"></span> Other Options:</legend>
@@ -66,9 +66,6 @@
         <div id="boggle-board">
           <?php
             //output the board
-          //  foreach ($x as $key => $value) {
-              # code...
-          //  }
             if (isset($_SESSION["board"])) {
               $board = $_SESSION["board"];
               for ($i=0; $i < count($board->cubes);$i++){
@@ -79,7 +76,7 @@
         </div>
 
       </div>
-      <br />
+    
       <div id="result-tag">Results:</div>
       <div class="alert alert-info" id="result_well">
         <?php
