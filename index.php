@@ -2,24 +2,21 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" href="styles.css">
     <title>Boggle Solver</title>
   </head>
 
   <body>
     <div id="container">
-      <a type="button"class="btn btn-info" id="reset-button" href=".\">Reset</a>
-      <p id="score-text">Score:
-        <?=$_SESSION["playerScore"]?>
-      </p>
-      <h1 class="header">Boggle Solver</h1>
+      <div id="header-div">
+        <a type="button"class="btn btn-info" id="reset-button" href=".\">Reset</a>
+        <p id="score-text">Score: <?=$_SESSION["playerScore"]?></p>
+        <h1 class="header">Boggle Solver</h1>
+      </div>
 
       <hr />
 
@@ -37,7 +34,7 @@
 
               <label class="form-check-label">
                 <input type="checkbox" class="form-check-input" name="trackwords" checked="checked">
-                Keep track of words found?
+                Track words found and score?
               </label>
 
             </div>
@@ -76,8 +73,6 @@
            ?>
         </div>
       </div>
-
-
 
       <div class="container-fluid">
         <div class="row">
