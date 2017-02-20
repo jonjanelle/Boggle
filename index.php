@@ -13,7 +13,7 @@
   <body>
     <div id="container">
       <div id="header-div">
-        <a type="button"class="btn btn-info" id="reset-button" href=".\">Reset</a>
+        <a class="btn btn-info" id="reset-button" href=".\">Reset</a>
         <p id="score-text">Score: <?=$_SESSION["playerScore"]?></p>
         <h1 class="header">Boggle Solver</h1>
       </div>
