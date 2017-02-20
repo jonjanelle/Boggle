@@ -24,38 +24,40 @@
         <div id="mainform">
           <form method="GET" action="index.php">
             <div class="form-group">
-              <legend><span class="glyphicon glyphicon-search"></span> Search for word:</legend>
+              <fieldset>
+                <legend><span class="glyphicon glyphicon-search"></span> Search for word:</legend>
+                <input type="text" class="form-control" name="word_search" autofocus>
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="highlight" checked="checked">
+                  Highlight word on board if found?
+                </label>
 
-              <input type="text" class="form-control" name="word_search" autofocus>
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="highlight" checked="checked">
-                Highlight word on board if found?
-              </label>
-
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="trackwords" checked="checked">
-                Track words found and score?
-              </label>
-
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" name="trackwords" checked="checked">
+                  Track words found and score?
+                </label>
+              </fieldset>
             </div>
             <div class="form-group">
-              <legend><span class="glyphicon glyphicon-plus"></span> Other Options:</legend>
-              <label class="form-check-label rad">
-                <input type="radio" class="form-check" name="options" value="shuffle">
-                Shuffle board
-              </label>
-              <label class="form-check-label rad">
-                <input type="radio" class="form-check" name="options" value="three-letter">
-                Show all 3-letter words
-              </label>
-              <label class="form-check-label rad">
-                <input type="radio" class="form-check" name="options" value="four-letter">
-                Show all 4-letter words
-              </label>
-              <label class="form-check-label rad">
-                <input type="radio" class="form-check" name="options" value="five-letter">
-                Show some 5-letter words
-              </label>
+              <fieldset>
+                <legend><span class="glyphicon glyphicon-plus"></span> Other Options:</legend>
+                <label class="form-check-label rad">
+                  <input type="radio" class="form-check" name="options" value="shuffle">
+                  Shuffle board
+                </label>
+                <label class="form-check-label rad">
+                  <input type="radio" class="form-check" name="options" value="three-letter">
+                  Show all 3-letter words
+                </label>
+                <label class="form-check-label rad">
+                  <input type="radio" class="form-check" name="options" value="four-letter">
+                  Show all 4-letter words
+                </label>
+                <label class="form-check-label rad">
+                  <input type="radio" class="form-check" name="options" value="five-letter">
+                  Show some 5-letter words
+                </label>
+              </fieldset>
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-primary btn-block">Submit</button>
