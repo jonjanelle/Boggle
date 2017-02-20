@@ -1,6 +1,8 @@
 <?php
   /**
-   * Represents an entire Boggle board as a collection of BogglePieces
+   * Represents an entire Boggle board as a collection of BogglePieces.
+   *
+   * Attributes:
    * $cubes: A square 2D array of BogglePieces
    */
   class BoggleBoard {
@@ -31,22 +33,34 @@
       }
     }
 
+    /**
+     * Set the border color of all cubes to a given
+     * CSS color string
+     */
     function setColorAll($colorClassName){
         for ($i=0; $i<count($this->cubes); $i++) {
           $this->cubes[$i]->color=$colorClassName;
         }
     }
 
-    function booleanColorSet($arr, $className){
+    /**
+     * Set the border color of specified cubes to a given
+     * css $colorName based on a boolean array.
+     * $arr: A 2D boolean array (representing game grid) with
+     *       true in positions that should be colored and false
+     *       in positions that should not be colored.
+     */
+    function booleanColorSet($arr, $colorName){
       for ($i=0;$i<count($arr);$i++){
         for ($j=0; $j<count($arr[$i]); $j++){
           if ($arr[$i][$j]) {
             $index = 5*$i+$j;
-            $this->cubes[$index]->color=$className;
+            $this->cubes[$index]->color=$colorName;
           }
         }
       }
     }
+
     /*
       Search the current board for a given $word.
       Returns true if $word is found, false otherwise.
@@ -143,4 +157,4 @@
       }
       return $wordsFound;
     }
-}
+} #eoc

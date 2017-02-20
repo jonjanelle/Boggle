@@ -23,7 +23,7 @@ class WordList {
 
   //Check whether $word is in this WordList
   function inList($word) {
-    $word = strtolower(trim($word)); 
+    $word = strtolower(trim($word));
     for ($i=0; $i<count($this->wordArray);$i++){
       if ($this->wordArray[$i]==$word) {
         return true;

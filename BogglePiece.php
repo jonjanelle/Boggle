@@ -32,4 +32,4 @@ class BogglePiece {
       $this->upSide=$newUpSide;
     }
   }
-}
+} #eoc

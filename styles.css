@@ -1,46 +1,46 @@
-
 #container{
-  margin: 0 auto;
   padding: 1em;
+}
+
+#score-text{
+  float: right;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #4682b4;
+}
+
+#reset-button {
+  float: left;
 }
 
 #boggle-board {
   display: inline-block;
   vertical-align: top;
-  margin: 1em 0em 0em 1em;
   padding:5px;
   background: #6495ed;
   border-radius: 5px;
+  margin-left: 1em;
   border: 10px solid #ffb90f;
   border-style:inset;
   width: 400px;
   height: 400px;
 }
 
-
 #mainform {
   display: inline-block;
   vertical-align: top;
   width: 300px;
   height: 400px;
-  padding:1.5em 1em 1em 1em;
-  margin: 1em 1em 0em 0em;
+  padding: 1em;
   background: #f4f7f8;
   border: 3px solid #d4d7df;
   border-radius: 5px;
 }
-#result-tag {
-  margin: 0 auto;
-  margin-top: 1em;
-  text-align:center;
-  font-weight: bold;
-  font-size: 1.5em;
-}
 
 .center-wrapper {
+  margin: 0 auto;
   text-align:center;
   width: 80%;
-  margin: 0 auto;
 }
 
 .boggle-square {
@@ -57,6 +57,7 @@
   outline-width: medium;
   outline-color: #6495ed;
 }
+
 .gains-border{
   border: 6px solid gainsboro;
   border-style: outset;
@@ -78,11 +79,15 @@
   font-weight: bold;
 }
 
+.container-fluid {
+  text-align: center;
+  margin-top: 2em;
+}
+
 .alert {
-  margin: 0 auto;
-  max-width: 90%;
   font-weight: bold;
   color: black;
+  padding: 1em;
   outline-color: #74A5FD;
 }
 
@@ -92,11 +97,18 @@
   box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.5);
 }
 
+.result-label {
+  color: #191970;
+  font-style: italic;
+  font-weight: bold;
+}
+
 hr {
   margin: .5em 0 1em 0;
   height: 8px;
   box-shadow: inset 0 8px 8px -8px rgba(0, 0, 0, 0.75);
 }
+
 legend {
   margin: 5px;
 }

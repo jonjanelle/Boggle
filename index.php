@@ -2,10 +2,10 @@
 <!doctype html>
 <html>
   <head>
-    <!-- Latest compiled and minified jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -15,12 +15,15 @@
 
   <body>
     <div id="container">
+      <a type="button"class="btn btn-info" id="reset-button" href=".\">Reset</a>
+      <p id="score-text">Score:
+        <?=$_SESSION["playerScore"]?>
+      </p>
+      <h1 class="header">Boggle Solver</h1>
 
-      <h1 class="header">Boggle Processor</h1>
       <hr />
 
       <div class="center-wrapper">
-
         <div id="mainform">
           <form method="GET" action="index.php">
             <div class="form-group">
@@ -33,7 +36,7 @@
               </label>
 
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="trackwords">
+                <input type="checkbox" class="form-check-input" name="trackwords" checked="checked">
                 Keep track of words found?
               </label>
 
@@ -65,27 +68,37 @@
 
         <div id="boggle-board">
           <?php
-            //output the board
             if (isset($_SESSION["board"])) {
-
               foreach($_SESSION["board"]->cubes as $cube) {
                 echo "<div class=\"boggle-square ".$cube->color."\">".$cube->getUpLetter()."</div>";
               }
             }
            ?>
         </div>
-
       </div>
 
-      <div id="result-tag">Results:</div>
-      <div class="alert <?=$alert_color?> shadowbox" id="result_well">
-        <?php
-          if (isset($_SESSION["resultString"])) {
-            echo $_SESSION["resultString"];
-          }
-        ?>
 
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6 result-label">Results</div>
+          <div class="col-md-6 col-sm-6 col-xs-6 result-label">Words Found</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="alert <?=$alert_color?> shadowbox" id="result-box">
+              <?=$resultString?>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="alert alert-info shadowbox" id="found-box">
+              <?=$_SESSION["wordsFound"]?>
+            </div>
+          </div>
+        </div>
       </div>
+
 
     </div>
   </body>
