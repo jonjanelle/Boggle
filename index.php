@@ -1,7 +1,7 @@
-<?php require('BoggleDriver.php');?>
 <!doctype html>
 <html>
   <head>
+    <?php require('BoggleDriver.php');?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
