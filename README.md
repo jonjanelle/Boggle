@@ -1,5 +1,5 @@
 # Boggle Board Generator and Solver
-# DWA-A2
+# 
 This application draws a randomly-shuffled Boggle-style board using php.
 Game pieces are modeled as 6-sided objects with one letter on each face. 
 
